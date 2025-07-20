@@ -160,7 +160,7 @@ function App() {
         <button 
           onClick={uploadImage} 
           disabled={!image || uploading || generating} 
-          style={{ marginRight: 8, minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+          style={{ marginRight: 8, minWidth: "120px" }}
         >
           {uploading ? (
             <ClipLoader color="#ffffff" size={16} />
@@ -171,7 +171,7 @@ function App() {
         <button 
           onClick={generateMasks} 
           disabled={!imageId || uploading || generating} 
-          style={{ marginRight: 8, minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+          style={{ marginRight: 8, minWidth: "120px" }}
         >
           {generating ? (
             <ClipLoader color="#ffffff" size={16} />
@@ -182,7 +182,7 @@ function App() {
         <button 
           onClick={() => setShowMask((v) => !v)} 
           disabled={!maskOverlay || fetchingMask}
-          style={{ minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+          style={{ minWidth: "120px"}}
         >
           {fetchingMask ? (
             <ClipLoader color="#ffffff" size={16} />
