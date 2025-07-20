@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
@@ -164,7 +165,17 @@ function App() {
           {showMask ? "Hide Mask" : "Show Mask"}
         </button>
       </div>
-      {loading && <div className="status-message info">Loading...</div>}
+      {loading && (
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "2rem",
+          margin: "1rem 0"
+        }}>
+          <ClipLoader color="#36d7b7" size={50} />
+        </div>
+      )}
       {masks.length > 0 && <div className="status-message info">{masks.length} masks generated.</div>}
       {imageId && <div className="status-message success">✅ Image uploaded (ID: {imageId})</div>}
       {masks.length > 0 && <div className="status-message info">🎭 {masks.length} masks available. Click on the image to see masks!</div>}
