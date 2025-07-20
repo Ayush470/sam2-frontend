@@ -8,7 +8,9 @@ function App() {
   const [imageUrl, setImageUrl] = useState("");
   const [imageId, setImageId] = useState("");
   const [masks, setMasks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [fetchingMask, setFetchingMask] = useState(false);
   const [maskOverlay, setMaskOverlay] = useState(null);
   const [showMask, setShowMask] = useState(true);
   const [lastUploadedImage, setLastUploadedImage] = useState(null);
@@ -40,7 +42,7 @@ function App() {
       alert("This image has already been uploaded. Please select a new image to upload again.");
       return;
     }
-    setLoading(true);
+    setUploading(true);
     try {
       const formData = new FormData();
       formData.append("file", image);
@@ -58,14 +60,15 @@ function App() {
       console.error("Error uploading image:", error);
       alert("Failed to upload image. Please try again.");
     } finally {
-      setLoading(false);
+      setUploading(false);
+      alert("Image uploaded successfully! Now you can generate masks.");
     }
   };
 
   // Generate masks
   const generateMasks = async () => {
     if (!imageId) return;
-    setLoading(true);
+    setGenerating(true);
     try {
       const res = await fetch(`${API_BASE_URL}/generate-masks?image_id=${imageId}`, {
         method: "POST",
@@ -82,7 +85,7 @@ function App() {
       console.error("Error generating masks:", error);
       alert("Failed to generate masks. Please try again.");
     } finally {
-      setLoading(false);
+      setGenerating(false);
     }
   };
 
@@ -103,7 +106,7 @@ function App() {
     const scaleY = naturalHeight / displayedHeight;
     const x = Math.round(displayedX * scaleX);
     const y = Math.round(displayedY * scaleY);
-    setLoading(true);
+    setFetchingMask(true);
     try {
       const res = await fetch(`${API_BASE_URL}/mask?x=${x}&y=${y}&image_id=${imageId}`);
       if (!res.ok) {
@@ -115,7 +118,7 @@ function App() {
       console.error("Error fetching mask:", error);
       alert("Failed to fetch mask. Please try again.");
     } finally {
-      setLoading(false);
+      setFetchingMask(false);
     }
   };
 
@@ -154,27 +157,40 @@ function App() {
         </div>
       )}
       <div className="button-group">
-        <button onClick={uploadImage} disabled={!image || loading} style={{ marginRight: 8 }}>
-          Upload Image
+        <button 
+          onClick={uploadImage} 
+          disabled={!image || uploading || generating} 
+          style={{ marginRight: 8, minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          {uploading ? (
+            <ClipLoader color="#ffffff" size={16} />
+          ) : (
+            "Upload Image"
+          )}
         </button>
-        <button onClick={generateMasks} disabled={!imageId || loading} style={{ marginRight: 8 }}>
-          Generate Masks
+        <button 
+          onClick={generateMasks} 
+          disabled={!imageId || uploading || generating} 
+          style={{ marginRight: 8, minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          {generating ? (
+            <ClipLoader color="#ffffff" size={16} />
+          ) : (
+            "Generate Masks"
+          )}
         </button>
-        <button onClick={() => setShowMask((v) => !v)} disabled={!maskOverlay}>
-          {showMask ? "Hide Mask" : "Show Mask"}
+        <button 
+          onClick={() => setShowMask((v) => !v)} 
+          disabled={!maskOverlay || fetchingMask}
+          style={{ minWidth: "120px", display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          {fetchingMask ? (
+            <ClipLoader color="#ffffff" size={16} />
+          ) : (
+            showMask ? "Hide Mask" : "Show Mask"
+          )}
         </button>
       </div>
-      {loading && (
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "2rem",
-          margin: "1rem 0"
-        }}>
-          <ClipLoader color="#36d7b7" size={50} />
-        </div>
-      )}
       {masks.length > 0 && <div className="status-message info">{masks.length} masks generated.</div>}
       {imageId && <div className="status-message success">✅ Image uploaded (ID: {imageId})</div>}
       {masks.length > 0 && <div className="status-message info">🎭 {masks.length} masks available. Click on the image to see masks!</div>}
