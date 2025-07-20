@@ -54,7 +54,6 @@ function App() {
       const data = await res.json();
       setImageId(data.image_id);
       setLastUploadedImage(image); // Track the last uploaded image
-      alert("Image uploaded successfully! Now you can generate masks.");
     } catch (error) {
       console.error("Error uploading image:", error);
       alert("Failed to upload image. Please try again.");
