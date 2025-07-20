@@ -11,7 +11,7 @@ This is the frontend for the SAM2 Mask Generation application with Modal integra
 
 1. Install dependencies:
    ```bash
-   yarn
+   yarn install
    ```
 
 2. Start the development server:
@@ -34,6 +34,6 @@ This is the frontend for the SAM2 Mask Generation application with Modal integra
   ```
 
 ## Integration
-- Connects to FastAPI backend running on port 8000
+- Connects to FastAPI backend
 - Backend uses Modal for GPU-powered SAM2 inference
 - Real-time mask generation and display
