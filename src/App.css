@@ -49,6 +49,7 @@
 }
 
 .button-group {
+  padding-top: 10px !important;
   margin: 1.5rem 0 1rem 0;
 }
 

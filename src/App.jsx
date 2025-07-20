@@ -124,7 +124,7 @@ function App() {
   return (
     <div className="app-container">
       <h1 className="app-title">SAM2 Mask Generator</h1>
-      <div className="upload-section">
+      <div className="upload-section" style={{ marginBottom: "0.5rem" }}>
         <input type="file" accept="image/*" onChange={handleImageChange} />
       </div>
       {image && (
