@@ -61,7 +61,6 @@ function App() {
       alert("Failed to upload image. Please try again.");
     } finally {
       setUploading(false);
-      alert("Image uploaded successfully! Now you can generate masks.");
     }
   };
 
@@ -163,7 +162,7 @@ function App() {
           style={{ marginRight: 8, minWidth: "120px" }}
         >
           {uploading ? (
-            <ClipLoader color="#ffffff" size={16} />
+            <ClipLoader color="#646cff" size={16} />
           ) : (
             "Upload Image"
           )}
@@ -174,7 +173,7 @@ function App() {
           style={{ marginRight: 8, minWidth: "120px" }}
         >
           {generating ? (
-            <ClipLoader color="#ffffff" size={16} />
+            <ClipLoader color="#646cff" size={16} />
           ) : (
             "Generate Masks"
           )}
@@ -185,7 +184,7 @@ function App() {
           style={{ minWidth: "120px"}}
         >
           {fetchingMask ? (
-            <ClipLoader color="#ffffff" size={16} />
+            <ClipLoader color="#646cff" size={16} />
           ) : (
             showMask ? "Hide Mask" : "Show Mask"
           )}
