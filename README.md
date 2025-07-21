@@ -2,6 +2,9 @@
 
 This is the frontend for the SAM2 Mask Generation application with Modal integration.
 
+## 🚀 Live Demo
+**Deployed on Netlify:** https://maskgenerator.netlify.app/
+
 ## Tech Stack
 - React
 - Vite

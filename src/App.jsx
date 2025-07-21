@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { ClipLoader } from "react-spinners";
+import './App.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
@@ -125,7 +126,19 @@ function App() {
     <div className="app-container">
       <h1 className="app-title">SAM2 Mask Generator</h1>
       <div className="upload-section" style={{ marginBottom: "0.5rem" }}>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <label htmlFor="file-upload" className="custom-file-upload">
+          <svg width="24" height="24" fill="none" stroke="#646cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 16V4M8 8l4-4 4 4M20 16.58A5 5 0 0 1 18 20H6a5 5 0 0 1-2-3.42"/>
+          </svg>
+          <span>Choose Image</span>
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+        />
       </div>
       {image && (
         <div className="image-area" style={{ margin: "1rem 0" }}>
