@@ -21,6 +21,13 @@
   margin-bottom: 1.5rem;
 }
 
+/* .upload-section.dragging {
+  border: 2px dashed #646cff;
+  background: #eaf4ff;
+  border-radius: 8px;
+  transition: background 0.2s, border-color 0.2s;
+} */
+
 .custom-file-upload {
   display: inline-flex;
   align-items: center;

@@ -15,6 +15,7 @@ function App() {
   const [maskOverlay, setMaskOverlay] = useState(null);
   const [showMask, setShowMask] = useState(true);
   const [lastUploadedImage, setLastUploadedImage] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const imgRef = useRef();
 
   // Handle image upload
@@ -125,12 +126,30 @@ function App() {
   return (
     <div className="app-container">
       <h1 className="app-title">SAM2 Mask Generator</h1>
-      <div className="upload-section" style={{ marginBottom: "0.5rem" }}>
+      <div
+        className={`upload-section${isDragging ? ' dragging' : ''}`}
+        style={{ marginBottom: "0.5rem" }}
+        onDragOver={e => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={e => {
+          e.preventDefault();
+          setIsDragging(false);
+        }}
+        onDrop={e => {
+          e.preventDefault();
+          setIsDragging(false);
+          if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            handleImageChange({ target: { files: e.dataTransfer.files } });
+          }
+        }}
+      >
         <label htmlFor="file-upload" className="custom-file-upload">
           <svg width="24" height="24" fill="none" stroke="#646cff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 16V4M8 8l4-4 4 4M20 16.58A5 5 0 0 1 18 20H6a5 5 0 0 1-2-3.42"/>
           </svg>
-          <span>Choose Image</span>
+          <span>Choose Image or Drag & Drop</span>
         </label>
         <input
           id="file-upload"
